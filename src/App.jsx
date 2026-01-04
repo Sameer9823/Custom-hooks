@@ -1,15 +1,27 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { useCart } from './hooks/useCart'
+import { products } from './data/products';
+import ProductCard from './components/ProductCard';
+import Cart from './components/Cart';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { cart, total, addToCart, removeFromCart, updateQuantity } = useCart();
 
   return (
     <>
-        <div>
-          Custom Hook Class
+        <div className="app">
+          <header>
+            <h1>Shopping Cart</h1>
+          </header>
+          <main>
+            <div className="products">
+              {products.map((product) => (
+                <ProductCard key={product.id} product={product} onAddToCart={addToCart} />
+              ))}
+            </div>
+            <Cart cart={cart} onRemoveFromCart={removeFromCart} onUpdateQuantity={updateQuantity} total={total} />
+          </main>
         </div>
     </>
   )
